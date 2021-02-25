@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DbIsKartiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TblDurums">
+          <Key>
+            <PropertyRef Name="DurumID" />
+          </Key>
+          <Property Name="DurumID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DurumAdi" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="TblGorev">
+          <Key>
+            <PropertyRef Name="GorevID" />
+          </Key>
+          <Property Name="GorevID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GorevAdi" Type="nvarchar" MaxLength="250" />
+          <Property Name="GorevSahip" Type="int" />
+          <Property Name="Aciklama" Type="nvarchar" MaxLength="2500" />
+          <Property Name="Notlar" Type="nvarchar" MaxLength="2500" />
+          <Property Name="GorevTarih" Type="date" />
+          <Property Name="TahminDate" Type="date" />
+          <Property Name="GercekDate" Type="date" />
+          <Property Name="DurumID" Type="int" />
+        </EntityType>
+        <EntityType Name="TblKullanici">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TblProje">
+          <Key>
+            <PropertyRef Name="ProjeID" />
+          </Key>
+          <Property Name="ProjeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjeAdi" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK_TblGorev_TblDurums">
+          <End Role="TblDurums" Type="Self.TblDurums" Multiplicity="0..1" />
+          <End Role="TblGorev" Type="Self.TblGorev" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblDurums">
+              <PropertyRef Name="DurumID" />
+            </Principal>
+            <Dependent Role="TblGorev">
+              <PropertyRef Name="DurumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblGorev_TblKullanici">
+          <End Role="TblKullanici" Type="Self.TblKullanici" Multiplicity="0..1" />
+          <End Role="TblGorev" Type="Self.TblGorev" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblKullanici">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TblGorev">
+              <PropertyRef Name="GorevSahip" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbIsKartiModelStoreContainer">
+          <EntitySet Name="TblDurums" EntityType="Self.TblDurums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblGorev" EntityType="Self.TblGorev" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblKullanici" EntityType="Self.TblKullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblProje" EntityType="Self.TblProje" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TblGorev_TblDurums" Association="Self.FK_TblGorev_TblDurums">
+            <End Role="TblDurums" EntitySet="TblDurums" />
+            <End Role="TblGorev" EntitySet="TblGorev" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblGorev_TblKullanici" Association="Self.FK_TblGorev_TblKullanici">
+            <End Role="TblKullanici" EntitySet="TblKullanici" />
+            <End Role="TblGorev" EntitySet="TblGorev" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbIsKartiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TblDurums">
+          <Key>
+            <PropertyRef Name="DurumID" />
+          </Key>
+          <Property Name="DurumID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DurumAdi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TblGorev" Relationship="Self.FK_TblGorev_TblDurums" FromRole="TblDurums" ToRole="TblGorev" />
+        </EntityType>
+        <EntityType Name="TblGorev">
+          <Key>
+            <PropertyRef Name="GorevID" />
+          </Key>
+          <Property Name="GorevID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GorevAdi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="GorevSahip" Type="Int32" />
+          <Property Name="Aciklama" Type="String" MaxLength="2500" FixedLength="false" Unicode="true" />
+          <Property Name="Notlar" Type="String" MaxLength="2500" FixedLength="false" Unicode="true" />
+          <Property Name="GorevTarih" Type="DateTime" Precision="0" />
+          <Property Name="TahminDate" Type="DateTime" Precision="0" />
+          <Property Name="GercekDate" Type="DateTime" Precision="0" />
+          <Property Name="DurumID" Type="Int32" />
+          <NavigationProperty Name="TblDurums" Relationship="Self.FK_TblGorev_TblDurums" FromRole="TblGorev" ToRole="TblDurums" />
+          <NavigationProperty Name="TblKullanici" Relationship="Self.FK_TblGorev_TblKullanici" FromRole="TblGorev" ToRole="TblKullanici" />
+        </EntityType>
+        <EntityType Name="TblKullanici">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TblGorev" Relationship="Self.FK_TblGorev_TblKullanici" FromRole="TblKullanici" ToRole="TblGorev" />
+        </EntityType>
+        <EntityType Name="TblProje">
+          <Key>
+            <PropertyRef Name="ProjeID" />
+          </Key>
+          <Property Name="ProjeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjeAdi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_TblGorev_TblDurums">
+          <End Role="TblDurums" Type="Self.TblDurums" Multiplicity="0..1" />
+          <End Role="TblGorev" Type="Self.TblGorev" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblDurums">
+              <PropertyRef Name="DurumID" />
+            </Principal>
+            <Dependent Role="TblGorev">
+              <PropertyRef Name="DurumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblGorev_TblKullanici">
+          <End Role="TblKullanici" Type="Self.TblKullanici" Multiplicity="0..1" />
+          <End Role="TblGorev" Type="Self.TblGorev" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblKullanici">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TblGorev">
+              <PropertyRef Name="GorevSahip" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbIsKartiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TblDurums" EntityType="Self.TblDurums" />
+          <EntitySet Name="TblGorev" EntityType="Self.TblGorev" />
+          <EntitySet Name="TblKullanici" EntityType="Self.TblKullanici" />
+          <EntitySet Name="TblProje" EntityType="Self.TblProje" />
+          <AssociationSet Name="FK_TblGorev_TblDurums" Association="Self.FK_TblGorev_TblDurums">
+            <End Role="TblDurums" EntitySet="TblDurums" />
+            <End Role="TblGorev" EntitySet="TblGorev" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblGorev_TblKullanici" Association="Self.FK_TblGorev_TblKullanici">
+            <End Role="TblKullanici" EntitySet="TblKullanici" />
+            <End Role="TblGorev" EntitySet="TblGorev" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbIsKartiModelStoreContainer" CdmEntityContainer="DbIsKartiEntities">
+          <EntitySetMapping Name="TblDurums">
+            <EntityTypeMapping TypeName="DbIsKartiModel.TblDurums">
+              <MappingFragment StoreEntitySet="TblDurums">
+                <ScalarProperty Name="DurumID" ColumnName="DurumID" />
+                <ScalarProperty Name="DurumAdi" ColumnName="DurumAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblGorev">
+            <EntityTypeMapping TypeName="DbIsKartiModel.TblGorev">
+              <MappingFragment StoreEntitySet="TblGorev">
+                <ScalarProperty Name="GorevID" ColumnName="GorevID" />
+                <ScalarProperty Name="GorevAdi" ColumnName="GorevAdi" />
+                <ScalarProperty Name="GorevSahip" ColumnName="GorevSahip" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="Notlar" ColumnName="Notlar" />
+                <ScalarProperty Name="GorevTarih" ColumnName="GorevTarih" />
+                <ScalarProperty Name="TahminDate" ColumnName="TahminDate" />
+                <ScalarProperty Name="GercekDate" ColumnName="GercekDate" />
+                <ScalarProperty Name="DurumID" ColumnName="DurumID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblKullanici">
+            <EntityTypeMapping TypeName="DbIsKartiModel.TblKullanici">
+              <MappingFragment StoreEntitySet="TblKullanici">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblProje">
+            <EntityTypeMapping TypeName="DbIsKartiModel.TblProje">
+              <MappingFragment StoreEntitySet="TblProje">
+                <ScalarProperty Name="ProjeID" ColumnName="ProjeID" />
+                <ScalarProperty Name="ProjeAdi" ColumnName="ProjeAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
